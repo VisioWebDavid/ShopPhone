@@ -1,0 +1,269 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>ShopPhone CLN — Celulares Premium</title>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg1:#0b0217;
+  --bg2:#3c0f7a;
+  --accent:#ff7a18;
+  --card:#141424;
+  --muted:#b9b9c3;
+  --glass:rgba(255,255,255,0.05);
+}
+*{box-sizing:border-box;transition:all .18s ease;}
+body{
+  margin:0;font-family:'Montserrat',sans-serif;
+  background:linear-gradient(160deg,var(--bg1),var(--bg2));
+  color:#fff;display:flex;min-height:100vh;
+}
+.sidebar{width:260px;padding:20px;background:rgba(255,255,255,0.02);backdrop-filter:blur(8px);border-right:1px solid rgba(255,255,255,0.06);position:sticky;top:0;height:100vh;}
+.logo{display:flex;align-items:center;gap:12px;margin-bottom:18px;}
+.mark{width:52px;height:52px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-weight:800;color:#111;box-shadow:0 0 12px rgba(255,122,24,0.6);overflow:hidden;background:linear-gradient(45deg,var(--accent),#ffb36b);}
+.mark img{width:100%;height:100%;object-fit:cover}
+.logo h1{margin:0;font-size:18px}
+.menu{display:flex;flex-direction:column;gap:10px;margin-top:8px}
+.menu button{background:transparent;border:0;color:var(--muted);padding:10px;border-radius:10px;text-align:left;font-weight:600;cursor:pointer;}
+.menu button.active,.menu button:hover{background:var(--glass);color:#fff;transform:translateX(4px);}
+.main{flex:1;padding:28px;overflow:auto;}
+.top{display:flex;flex-direction:column;gap:18px;margin-bottom:18px;align-items:center}
+.hero-left{flex:1}
+.title{font-size:28px;font-weight:900;margin:0}
+.subtitle{color:var(--muted);margin-top:6px}
+.hero-cta{display:flex;gap:12px;align-items:center}
+.btn{background:var(--accent);border:0;color:#111;font-weight:700;padding:10px 16px;border-radius:12px;cursor:pointer;box-shadow:0 8px 24px rgba(255,122,24,0.28);}
+.small{background:transparent;border:1px solid rgba(255,255,255,0.1);padding:8px 10px;border-radius:10px;color:var(--muted);cursor:pointer;}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:18px;margin-top:18px}
+.card{background:var(--card);border-radius:16px;border:1px solid rgba(255,255,255,0.05);padding:14px;display:flex;flex-direction:column;gap:12px;box-shadow:0 4px 12px rgba(0,0,0,0.3);}
+.card:hover{transform:translateY(-6px);box-shadow:0 14px 34px rgba(0,0,0,0.45);}
+.product-image{height:180px;display:flex;align-items:center;justify-content:center}
+.product-image img{max-width:92%;max-height:92%;border-radius:12px;filter:drop-shadow(0 12px 30px rgba(0,0,0,0.55));transition:transform .4s;}
+.card:hover .product-image img{transform:translateY(-6px) scale(1.02)}
+.price{font-size:18px;font-weight:800;color:var(--accent)}
+.cart-panel{width:340px;background:rgba(255,255,255,0.02);backdrop-filter:blur(8px);border-left:1px solid rgba(255,255,255,0.06);padding:18px;position:sticky;top:0;height:100vh;}
+.cart-list{display:flex;flex-direction:column;gap:10px;max-height:55vh;overflow:auto;}
+.cart-item{display:flex;gap:10px;align-items:center}
+.cart-item img{width:56px;height:56px;border-radius:8px;object-fit:cover}
+.modal{position:fixed;inset:0;background:rgba(0,0,0,0.6);display:none;align-items:center;justify-content:center;padding:20px;}
+.modal .box{background:#101020;padding:22px;border-radius:14px;width:100%;max-width:520px;animation:pop .28s ease;}
+@keyframes pop{from{transform:scale(.95);opacity:0;}to{transform:scale(1);opacity:1;}}
+input,textarea,select{background:transparent;border:1px solid rgba(255,255,255,0.08);padding:10px;border-radius:8px;color:#fff;width:100%}
+label{font-size:13px;color:var(--muted);margin-bottom:4px;display:block}
+textarea{resize:none;height:88px}
+.payment-options{display:flex;gap:12px;margin-top:6px;}
+.payment-options label{flex:1;text-align:center;background:rgba(255,255,255,0.05);padding:10px;border-radius:8px;cursor:pointer;transition:all .2s;}
+.payment-options input[type="radio"]{display:none;}
+.payment-options input[type="radio"]:checked + span{background:var(--accent);color:#111;font-weight:700;}
+@media(max-width:980px){body{flex-direction:column}.sidebar,.cart-panel{display:none}.main{padding:18px}}
+</style>
+</head>
+<body>
+
+<aside class="sidebar">
+  <div class="logo">
+    <div class="mark">
+      <img src="https://i.postimg.cc/k5jnz49K/SHOPPHONEIMG.jpg" alt="ShopPhone Logo">
+    </div>
+    <div>
+      <h1>ShopPhone CLN</h1>
+      <div style="font-size:12px;color:var(--muted)">Celulares nuevos & exhibición</div>
+    </div>
+  </div>
+  <nav class="menu">
+    <button class="active" onclick="scrollToSection('home')">🏠 Inicio</button>
+    <button onclick="scrollToSection('catalog')">📱 Catálogo</button>
+    <button onclick="scrollToSection('benefits')">✨ Ventajas</button>
+    <button onclick="openModal()">📦 Pedido</button>
+    <button onclick="scrollToSection('contact')">📞 Contacto</button>
+  </nav>
+  <div style="margin-top:20px;font-size:13px;color:var(--muted)">
+    <strong>Horario:</strong><br>Lun-Sab 10:00–20:00
+  </div>
+</aside>
+
+<main class="main" id="home">
+  <div class="top">
+    <div class="hero-left">
+      <h1 class="title">¡Estrena sin miedo con ShopPhone CLN!</h1>
+      <div class="subtitle">Celulares nuevos y de exhibición — Garantía y envío a todo México.</div>
+      <div class="hero-cta" style="margin-top:12px">
+        <button class="btn" onclick="scrollToSection('catalog')">Ver catálogo</button>
+        <div style="color:var(--muted);font-weight:700">Envíos a todo México</div>
+      </div>
+    </div>
+  </div>
+
+  <section id="catalog">
+    <h3>Catálogo</h3>
+    <div class="grid" id="productGrid"></div>
+  </section>
+
+  <section id="benefits" style="margin-top:22px">
+    <h3>Beneficios</h3>
+    <div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:10px">
+      <div class="small">🚚 Envíos a todo México</div>
+      <div class="small">💳 Hasta 18 meses con TDC</div>
+      <div class="small">✅ Garantía incluida</div>
+      <div class="small">📞 WhatsApp directo</div>
+    </div>
+  </section>
+
+  <section id="contact" style="margin-top:22px">
+    <h3>Contacto</h3>
+    <p style="color:var(--muted)">📍 Blvd. Benjamín Hill 3805, Col. Palma, Culiacán, Sinaloa</p>
+    <p style="color:var(--muted)">
+      📱 WhatsApp: 
+      <a href="https://wa.me/526677975519" target="_blank" style="color:var(--accent);text-decoration:none;font-weight:700">
+        +52 667 79 75 519
+      </a>
+    </p>
+  </section>
+</main>
+
+<aside class="cart-panel">
+  <h3>🛒 Carrito</h3>
+  <div id="cartList" class="cart-list"><div style="color:var(--muted)">No hay productos aún.</div></div>
+  <div class="cart-footer">
+    <div style="display:flex;justify-content:space-between;margin-top:10px;">
+      <span style="color:var(--muted)">Subtotal:</span>
+      <strong id="subtotal">$0 MXN</strong>
+    </div>
+    <div style="margin-top:10px;display:flex;gap:8px">
+      <button class="btn" onclick="openModal()">Finalizar</button>
+      <button class="small" onclick="emptyCart()">Vaciar</button>
+    </div>
+  </div>
+</aside>
+
+<div class="modal" id="modal">
+  <div class="box">
+    <h3>Formulario de pedido</h3>
+    <p style="color:var(--muted);margin-top:6px">Completa tus datos y enviaremos tu pedido por WhatsApp con fecha/hora automática.</p>
+    <form id="orderForm" onsubmit="submitOrder(event)" style="display:grid;gap:10px;margin-top:10px">
+      <div><label>Nombre completo</label><input id="name" required></div>
+      <div><label>Teléfono (WhatsApp)</label><input id="phone" required placeholder="Ej: 6671234567"></div>
+      <div><label>Domicilio / Recoger en tienda</label><input id="address" required></div>
+
+      <div class="payment-options">
+        <label><input type="radio" name="payment" value="Tarjeta"><span>Tarjeta</span></label>
+        <label><input type="radio" name="payment" value="Efectivo"><span>Efectivo</span></label>
+      </div>
+
+      <div><label>Productos</label><textarea id="orderProducts" rows="3" readonly></textarea></div>
+      <div style="display:flex;gap:10px">
+        <button class="btn" type="submit">Enviar por WhatsApp</button>
+        <button class="small" type="button" onclick="closeModal()">Cancelar</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<script>
+const products=[
+  {id:'pixel10',title:'Google Pixel 10 Pro XL',price:21999,img:'https://i.postimg.cc/8PHMcRbj/GOOGLE.jpg',meta:'512 GB • Nuevo'},
+  {id:'iphone17',title:'iPhone 17 Pro Max',price:29499,img:'https://i.postimg.cc/Vvtg2Jyt/CEL17-PROMAX.png',meta:'256 GB • Nuevo'},
+  {id:'iphone16',title:'iPhone 16 Pro — 256 GB',price:24999,img:'https://i.postimg.cc/V6rWbJk7/CEL16PRO.jpg',meta:'256 GB • Nuevo'},
+  {id:'airpods4',title:'AirPods 4ta Gen OEM',price:700,img:'https://i.postimg.cc/J7QW20qr/AIRPODS4.jpg',meta:'Nuevo'},
+  {id:'airpodsPro',title:'AirPods Pro OEM',price:800,img:'https://i.postimg.cc/PfSRDwyg/AIRPODSPROO.avif',meta:'Nuevo'},
+  {id:'airpodsMax',title:'AirPods Max OEM',price:1000,img:'https://i.postimg.cc/pdvZ4Wky/AIRPODSMAX.jpg',meta:'Nuevo'}
+];
+
+const grid=document.getElementById('productGrid');
+function renderProducts(){
+  grid.innerHTML='';
+  products.forEach(p=>{
+    const card=document.createElement('div');
+    card.className='card';
+    card.innerHTML=`
+      <div class="product-image">
+        <img src="${p.img}" alt="${p.title}" onerror="this.src='https://via.placeholder.com/300x400?text=Sin+imagen'">
+      </div>
+      <div><strong>${p.title}</strong><br><span style="color:var(--muted);font-size:13px">${p.meta}</span></div>
+      <div style="display:flex;justify-content:space-between;align-items:center">
+        <div class="price">$${p.price.toLocaleString('es-MX')}</div>
+        <div style="display:flex;gap:6px">
+          <button class="btn" onclick="addToCartById('${p.id}')">Agregar</button>
+        </div>
+      </div>`;
+    grid.appendChild(card);
+  });
+}
+renderProducts();
+
+let cart=[];
+const cartList=document.getElementById('cartList');
+const subtotalEl=document.getElementById('subtotal');
+
+function addToCartById(id){
+  const p=products.find(x=>x.id===id);
+  if(!p)return;
+  const exist=cart.find(i=>i.id===id);
+  if(exist)exist.qty++;
+  else cart.push({...p,qty:1});
+  renderCart();
+}
+
+function renderCart(){
+  cartList.innerHTML='';
+  if(cart.length===0){
+    cartList.innerHTML='<div style="color:var(--muted)">No hay productos aún.</div>';
+    subtotalEl.innerText='$0 MXN';
+    return;
+  }
+  cart.forEach(i=>{
+    const el=document.createElement('div');
+    el.className='cart-item';
+    el.innerHTML=`
+      <img src="${i.img}" onerror="this.src='https://via.placeholder.com/100'">
+      <div style="flex:1">
+        <div style="font-weight:700">${i.title}</div>
+        <div style="font-size:13px;color:var(--muted)">${i.qty} × $${i.price.toLocaleString('es-MX')}</div>
+      </div>
+      <div style="text-align:right">
+        <strong style="color:var(--accent)">$${(i.qty*i.price).toLocaleString('es-MX')}</strong>
+      </div>`;
+    cartList.appendChild(el);
+  });
+  const total=cart.reduce((sum,i)=>sum+i.price*i.qty,0);
+  subtotalEl.innerText=`$${total.toLocaleString('es-MX')} MXN`;
+}
+
+function emptyCart(){cart=[];renderCart();}
+const modal=document.getElementById('modal');
+
+function openModal(){
+  if(cart.length===0){alert('No hay productos en el carrito');return;}
+  modal.style.display='flex';
+  document.getElementById('orderProducts').value=cart.map(c=>`${c.qty} × ${c.title} ($${c.price})`).join('\n');
+}
+
+function closeModal(){modal.style.display='none';}
+
+function submitOrder(e){
+  e.preventDefault();
+  const name=document.getElementById('name').value.trim();
+  const phone=document.getElementById('phone').value.trim();
+  const address=document.getElementById('address').value.trim();
+  const productsText=document.getElementById('orderProducts').value;
+  const payMethod=document.querySelector('input[name="payment"]:checked')?.value;
+  if(!name || !phone || !address){alert('Completa todos los campos');return;}
+  if(!payMethod){alert('Selecciona un método de pago');return;}
+  const now=new Date();
+  const dateStr=now.toLocaleString('es-MX');
+  const msg=`*Pedido ShopPhone*\nNombre: ${name}\nTel: ${phone}\nDirección: ${address}\nMétodo de pago: ${payMethod}\nFecha/Hora: ${dateStr}\n\nProductos:\n${productsText}`;
+  const waUrl=`https://wa.me/526677975519?text=${encodeURIComponent(msg)}`;
+  window.open(waUrl,'_blank');
+  closeModal();
+  emptyCart();
+}
+
+function scrollToSection(id){
+  const el=document.getElementById(id);
+  if(el)el.scrollIntoView({behavior:'smooth'});
+}
+</script>
+</body>
+</html>
